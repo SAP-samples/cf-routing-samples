@@ -30,7 +30,7 @@ def handle(sock):
                 )
                 conn.send_data(
                     stream_id=stream_id,
-                    data=b'Hello! This Python application is speaking HTTP2 with the CF routing layer\n',
+                    data=b'Hello! This Python application is speaking plain text HTTP2 (H2C) with the CF routing layer\n',
                     end_stream=True
                 )
 

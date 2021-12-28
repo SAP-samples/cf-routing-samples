@@ -1,6 +1,6 @@
 # H2C Sample Apps
 
-Cloud Foundry sample apps using plain-text HTTP2 (H2C)
+Cloud Foundry sample apps using plain text HTTP2 (H2C)
 
 ### How to deploy
 
@@ -34,5 +34,5 @@ Check the app is working
 
 ```shell
 > curl https://http2-example-app-go.cfapps.cfi01.ali.cfi.sapcloud.io/
-Hello! This Go application is speaking HTTP2 with the CF routing layer
+Hello! This Go application is speaking plain text HTTP2 (H2C) with the CF routing layer
 ```
