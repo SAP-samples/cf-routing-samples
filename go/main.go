@@ -17,7 +17,7 @@ type payload struct {
 
 func main() {
 	handler := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-		fmt.Fprintln(w, "Hello! This Go application is speaking HTTP2 with the CF routing layer")
+		fmt.Fprintln(w, "Hello! This Go application is speaking plain text HTTP2 (H2C) with the CF routing layer")
 	})
 
 	h2s := &http2.Server{}
