@@ -1,6 +1,6 @@
 # H2C Sample Apps
 
-Cloud Foundry sample apps using plain text HTTP2 (H2C)
+Cloud Foundry sample apps using plain text HTTP2 (H2C) for Go, Node.JS, Ruby, and Python.
 
 ### How to deploy
 
