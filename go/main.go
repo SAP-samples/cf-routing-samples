@@ -17,6 +17,7 @@ type payload struct {
 
 func main() {
 	handler := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "text/plain")
 		fmt.Fprintln(w, "Hello! This Go application is speaking plain text HTTP2 (H2C) with the CF routing layer")
 	})
 

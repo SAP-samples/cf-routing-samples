@@ -25,7 +25,8 @@ def handle(sock):
                 conn.send_headers(
                     stream_id=stream_id,
                     headers=[
-                        (':status', '200')
+                        (':status', '200'),
+                        ('content-type', 'text/plain')
                     ],
                 )
                 conn.send_data(
