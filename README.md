@@ -1,6 +1,6 @@
 # H2C Sample Apps
 
-FIXME: description
+Cloud Foundry sample apps using plain-text HTTP2 (H2C)
 
 ### How to deploy
 
