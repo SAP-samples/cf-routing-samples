@@ -20,7 +20,7 @@ Check out this repo and go to the app you want to test
 > cd go-http2
 ```
 
-choose a name and push the application without starting
+choose a name and push the application without adding a route
 
 ```shell
 > cf push --no-route http2-example-app-go
@@ -56,7 +56,7 @@ Check out this repo and go to the app you want to test
 > cd go-gRPC
 ```
 
-Choose a name and push the application without starting
+Choose a name and push the application without adding a route
 
 ```shell
 > cf push --no-route gRPC-example-app-go
