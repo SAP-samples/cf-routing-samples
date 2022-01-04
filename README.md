@@ -13,7 +13,7 @@ Make sure you have [CF CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.
 cf version 8.0.0+e8d41cf8e.2021-09-16
 ```
 
-Check out this repo and go to the app you want to test
+Clone this repo and go to the app you want to test
 
 ```shell
 > git clone https://github.com/SAP-samples/cf-http2
@@ -49,7 +49,7 @@ Make sure you have [CF CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.
 cf version 8.0.0+e8d41cf8e.2021-09-16
 ```
 
-Check out this repo and go to the app you want to test
+Clone this repo and go to the app you want to test
 
 ```shell
 > git clone https://github.com/SAP-samples/cf-gRPC
