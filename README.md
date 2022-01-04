@@ -76,8 +76,14 @@ Make a gRPC request using grpcurl
 ```shell
 > export MTLS_CERT_PATH=path/to/mtls_client_certificate.pem
 > export MTLS_KEY_PATH=path/to/mtls_client_private_key.pem
-> grpcurl -insecure -cert $MTLS_CERT_PATH" -key $MTLS_KEY_PATH" grpc-example-app-go.$CF_MTLS_APPS_DOMAIN:443 example.Example.Run
+> grpcurl -insecure -cert $MTLS_CERT_PATH -key $MTLS_KEY_PATH grpc-example-app-go.$CF_MTLS_APPS_DOMAIN:443 example.Example.Run
 {
   "message": "Hello! This Go application is speaking gRPC"
+}
+
+# Alternative grpcurl for apps which dont support reflection (such as Node.js)
+> grpcurl -proto example.proto -insecure -cert $MTLS_CERT_PATH -key $MTLS_KEY_PATH grpc-example-app-node.$CF_MTLS_APPS_DOMAIN:443 Example.Run
+{
+  "message": "Hello! This Node.JS application is speaking gRPC"
 }
 ```
