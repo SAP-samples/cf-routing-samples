@@ -71,9 +71,13 @@ Map an HTTP2 route with the application. It must be a route on an apps domain su
 
 Download grpcurl from https://github.com/fullstorydev/grpcurl/releases and put it in your path
 
-FIXME:
+Make a gRPC request using grpcurl
+
 ```
 > export MTLS_CERT_PATH=path/to/mtls_client_certificate.pem
 > export MTLS_KEY_PATH=path/to/mtls_client_private_key.pem
 > grpcurl -insecure -cert $MTLS_CERT_PATH" -key $MTLS_KEY_PATH" grpc-example-app-go.$CF_MTLS_APPS_DOMAIN:443 example.Example.Run
+{
+  "message": "Hello! This Go application is speaking gRPC"
+}
 ```
