@@ -73,7 +73,7 @@ Download grpcurl from https://github.com/fullstorydev/grpcurl/releases and put i
 
 Make a gRPC request using grpcurl
 
-```
+```shell
 > export MTLS_CERT_PATH=path/to/mtls_client_certificate.pem
 > export MTLS_KEY_PATH=path/to/mtls_client_private_key.pem
 > grpcurl -insecure -cert $MTLS_CERT_PATH" -key $MTLS_KEY_PATH" grpc-example-app-go.$CF_MTLS_APPS_DOMAIN:443 example.Example.Run
