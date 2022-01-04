@@ -1,4 +1,4 @@
-# gRPC APP
+# gRPC Example App
 
 Example gRPC server implemented in Go
 
