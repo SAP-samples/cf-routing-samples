@@ -20,10 +20,19 @@ Clone this repo and go to the app you want to test
 > cd go-http2
 ```
 
-choose a name and push the application without adding a route
+Build the app (Java apps only)
+
+```shell
+> gradle build
+```
+
+Choose a name and push the application without adding a route
 
 ```shell
 > cf push --no-route http2-example-app-go
+
+# For the Java app, specify the path to the distribution zip
+> cf push --no-route http2-example-app-java --buildpack java_buildpack --path app/build/distributions/app.zip
 ```
 
 Map an HTTP2 route with the application
