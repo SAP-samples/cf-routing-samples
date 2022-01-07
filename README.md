@@ -59,10 +59,10 @@ Clone this repo and go to the app you want to test
 Choose a name and push the application without adding a route
 
 ```shell
-> cf push --no-route gRPC-example-app-go
+> cf push --no-route grpc-example-app-go
 
 # For the Java app, specify the path to the distribution zip
-> cf push --no-route gRPC-example-app-java --buildpack java_buildpack --path app/build/distributions/app.zip
+> cf push --no-route grpc-example-app-java --buildpack java_buildpack --path app/build/distributions/app.zip
 ```
 
 Map an HTTP2 route with the application. It must be a route on an apps domain supporting mutual TLS (mTLS) and you must have the client certificate and private key available on your machine
