@@ -65,6 +65,12 @@ Clone this repo and go to the app you want to test
 > cd go-gRPC
 ```
 
+Build the app (Java apps only)
+
+```shell
+> gradle build
+```
+
 Choose a name and push the application without adding a route
 
 ```shell
