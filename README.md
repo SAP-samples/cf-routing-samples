@@ -8,12 +8,15 @@
 
 This repository contains samples for CloudFoundry related to routing topics.
 
+The following samples are available in the respective subdirectories:
+
+* [`http2`](http2/README.md) - HTTP/2 and gRPC enabled server samples for CloudFoundry
+
 ## Requirements
 
 The samples provided in this repository are intended to run in a CloudFoundry environment. Each of the samples may contain further information on specific technical requirements.
 
 Samples are provided in different programming languages and require the respective runtime environment for development.
-
 ## Download and Installation
 
 These samples are provided as source code and should be seen as starting point or reference on how to approach or solve a particular requirement.
