@@ -4,6 +4,8 @@ Cloud Foundry sample apps showcasing plain text HTTP2 (H2C) and gRPC via secure 
 
 Note: due to the lack of H2C support in popular frameworks, the Ruby and Python examples are very low level.
 
+Each sample has a README file that explains how to run it locally. Some of these examples require additional applications or commands that can be obtained from their respective home pages or operating system distribution.
+
 ### How to deploy H2C apps
 
 Make sure you have [CF CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) version 8 or higher installed

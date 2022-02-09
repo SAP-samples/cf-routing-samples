@@ -7,6 +7,7 @@ import h2.config
 # Example H2C web app
 # Based on https://python-hyper.org/projects/h2/en/stable/basic-usage.html#writing-your-server
 
+
 def handle(sock):
     config = h2.config.H2Configuration(client_side=False)
     conn = h2.connection.H2Connection(config=config)

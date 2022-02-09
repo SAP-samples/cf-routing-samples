@@ -1,4 +1,4 @@
-module github.com/SAP-samples/cf-http2
+module github.com/SAP-samples/cf-routing-samples/go-http2
 
 go 1.17
 

@@ -1,10 +1,11 @@
-# gRPC Example App
+# Python gRPC Sample
 
 Example gRPC server implemented in Python
 
-## Running Locally FIXME
+## Running Locally
 1. `pipenv install -r requirements.txt`
 2. `PORT=8080 python3 main.py`
+3. `grpcurl -proto example.proto -plaintext localhost:8080 Example.Run`
 
 ### Renerating code
 

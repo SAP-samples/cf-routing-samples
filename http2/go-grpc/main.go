@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	pb "github.com/SAP-samples/cf-http2/example"
+	pb "github.com/SAP-samples/cf-routing-samples/go-grpc/example"
 )
 
 type server struct {

@@ -1,4 +1,4 @@
-module github.com/SAP-samples/cf-http2
+module github.com/SAP-samples/cf-routing-samples/go-grpc
 
 go 1.17
 
@@ -13,4 +13,5 @@ require (
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect
 	golang.org/x/text v0.3.0 // indirect
 	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.2.0 // indirect
 )
