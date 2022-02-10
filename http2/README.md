@@ -6,6 +6,19 @@ Note: due to the lack of H2C support in popular frameworks, the Ruby and Python 
 
 Each sample has a README file that explains how to run it locally. Some of these examples require additional applications or commands that can be obtained from their respective home pages or operating system distribution.
 
+## Downloading the Samples
+
+Clone this repo and go to the app you want to test
+
+```shell
+# Skip this if you cloned the repository already
+> git clone https://github.com/SAP-samples/cf-routing-samples
+> cd cf-routing-samples/http2
+
+# Depending on the app you want to try, go into that respective directory, e.g. go-http2
+> cd go-http2
+```
+
 ### How to deploy H2C apps
 
 Make sure you have [CF CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) version 8 or higher installed
@@ -18,8 +31,8 @@ cf version 8.0.0+e8d41cf8e.2021-09-16
 Clone this repo and go to the app you want to test
 
 ```shell
-> git clone https://github.com/SAP-samples/cf-http2
-> cd go-http2
+> git clone https://github.com/SAP-samples/cf-routing-samples
+> cd cf-routing-samples/http2
 ```
 
 Build the app (Java apps only)
@@ -60,13 +73,6 @@ Make sure you have [CF CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.
 cf version 8.0.0+e8d41cf8e.2021-09-16
 ```
 
-Clone this repo and go to the app you want to test
-
-```shell
-> git clone https://github.com/SAP-samples/cf-gRPC
-> cd go-gRPC
-```
-
 Build the app (Java apps only)
 
 ```shell
@@ -101,7 +107,7 @@ Make a gRPC request using grpcurl
   "message": "Hello! This Go application is speaking gRPC"
 }
 
-# Alternative grpcurl for apps which dont support reflection (such as Node.js)
+# Alternative grpcurl for apps which don't support reflection (such as Node.js)
 > grpcurl -proto example.proto -insecure -cert $MTLS_CERT_PATH -key $MTLS_KEY_PATH grpc-example-app-node.$CF_MTLS_APPS_DOMAIN:443 Example.Run
 {
   "message": "Hello! This Node.JS application is speaking gRPC"
