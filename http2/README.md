@@ -38,7 +38,7 @@ Clone this repo and go to the app you want to test
 Build the app (Java apps only)
 
 ```shell
-> gradle build
+> ./gradlew build
 ```
 
 Choose a name and push the application without adding a route
@@ -76,7 +76,7 @@ cf version 8.0.0+e8d41cf8e.2021-09-16
 Build the app (Java apps only)
 
 ```shell
-> gradle build
+> ./gradlew build
 ```
 
 Choose a name and push the application without adding a route
