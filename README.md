@@ -2,7 +2,7 @@
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/REPO-NAME)](https://api.reuse.software/info/github.com/SAP-samples/REPO-NAME)
 -->
 
-# CloudFoundry Routing Samples
+# Cloud Foundry Routing Samples
 
 ## Description
 
@@ -14,11 +14,11 @@ In order to leverage more advance features of the routing stack of the Cloud Fou
 
 The following samples are available in the respective subdirectories:
 
-* [`http2`](http2/README.md) - HTTP/2 and gRPC enabled server samples for CloudFoundry
+* [`http2`](http2/README.md) - HTTP/2 and gRPC enabled server samples for Cloud Foundry
 
 ## Requirements
 
-The samples provided in this repository are intended to run in a CloudFoundry environment. Each of the samples may contain further information on specific technical requirements.
+The samples provided in this repository are intended to run in a Cloud Foundry environment. Each of the samples may contain further information on specific technical requirements.
 
 Samples are provided in different programming languages and require the respective runtime environment for development.
 ## Download and Installation
