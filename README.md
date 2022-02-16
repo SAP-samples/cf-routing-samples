@@ -6,7 +6,11 @@
 
 ## Description
 
-This repository contains samples for CloudFoundry related to routing topics.
+The SAP Business Technology Platform (BTP) provides a runtime environment for running your applications at scale.
+
+This repository contains samples for applications running on the Cloud Foundry runtime for SAP BTP, related to routing topics.
+
+In order to leverage more advance features of the routing stack of the Cloud Foundry runtime for SAP BTP, such as full support for HTTP/2, your apps need to add support.
 
 The following samples are available in the respective subdirectories:
 
