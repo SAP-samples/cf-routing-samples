@@ -3,7 +3,7 @@
 This folder contains Cloud Foundry sample apps showcasing plain text HTTP2 (H2C) and gRPC via secure HTTP2.
 
 A more detailed look into HTTP/2 on the SAP BTP, Cloud Foundry environment can be found in the following blog post:
-* [HTTP/2 on the SAP BTP, Cloud Foundry runtime](https://blogs.sap.com/) (link to be updated when the blog post is published)
+* [HTTP/2 on the SAP BTP, Cloud Foundry runtime](https://blogs.sap.com/2022/02/16/http-2-on-sap-btp-cloud-foundry-runtime/)
 
 Each sample has a README file that explains how to run it locally. Some of these examples require additional applications or commands that can be obtained from their respective home pages or operating system distribution.
 
