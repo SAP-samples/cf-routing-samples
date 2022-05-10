@@ -27,16 +27,18 @@ The download from GitHub, either via Git or archive, is recommended.
 
 ## Known Issues
 
-- HTTP/2 support is being rolled out globally but is not complete. In order to use the HTTP/2 samples, you need to enable a custom domain with HTTP/2 support. 
+- HTTP/2 support is being rolled out globally but is not complete. In order to use the HTTP/2 samples, you need to enable a custom domain with HTTP/2 support.
   <!-- todo link to the blog post about that! -->
 
 ## How to obtain support
 [Create an issue](https://github.com/SAP-samples/cf-routing-samples/issues) in this repository if you find a bug or have questions about the content.
- 
+
 For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
 ## Contributing
-If you wish to contribute code, offer fixes or improvements, please send a pull request. Due to legal reasons, contributors will be asked to accept a DCO when they create the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
+If you want to contribute, please check the [CONTRIBUTING.md](CONTRIBUTING.md) documentation for contribution guidelines.
+## Code of conduct
 
+SAP adopts the Contributor's Covenant 2.0 across our open source projects to ensure a welcoming and open culture for everyone involved ([Code of Conduct](CODE_OF_CONDUCT.md)).
 ## License
 Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSES/Apache-2.0.txt) file.
