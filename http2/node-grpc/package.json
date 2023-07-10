@@ -9,6 +9,6 @@
   "author": "",
   "dependencies": {
     "@grpc/grpc-js": "^1.8.8",
-    "@grpc/proto-loader": "^0.6.7"
+    "@grpc/proto-loader": "^0.7.7"
   }
 }
