@@ -1,0 +1,12 @@
+plugins {
+    id "org.cyclonedx.bom" version "1.6.1"
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+}

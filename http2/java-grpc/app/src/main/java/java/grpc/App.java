@@ -63,7 +63,7 @@ public class App {
   static class ExampleImpl extends ExampleGrpc.ExampleImplBase {
     @Override
     public void run(Request req, StreamObserver<Response> responseObserver) {
-      Response response = Response.newBuilder().setMessage("Hello! This Go application is speaking gRPC").build();
+      Response response = Response.newBuilder().setMessage("Hello! This Java application is speaking gRPC").build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     }

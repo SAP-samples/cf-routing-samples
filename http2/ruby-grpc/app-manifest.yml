@@ -1,0 +1,10 @@
+---
+applications:
+  - name: ruby-grpc-test
+    disk_quota: 256M
+    memory: 256M
+    buildpacks:
+      - https://github.com/cloudfoundry/ruby-buildpack
+    routes:
+      - route: ruby-grpc-test.((domain))
+        protocol: http2

@@ -18,7 +18,12 @@ The following samples are available in the respective subdirectories:
 
 The samples provided in this repository are intended to run in a Cloud Foundry environment. Each of the samples may contain further information on specific technical requirements.
 
-Samples are provided in different programming languages and require the respective runtime environment for development.
+Samples are provided in the following programming languages and require the respective runtime environment for development:
+* go
+* java
+* node
+* python
+* ruby
 ## Download and Installation
 
 These samples are provided as source code and should be seen as starting point or reference on how to approach or solve a particular requirement.

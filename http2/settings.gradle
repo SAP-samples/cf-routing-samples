@@ -1,0 +1,4 @@
+rootProject.name = 'sample-apps-composite'
+
+include('java-grpc:app')
+include('java-http2:app')

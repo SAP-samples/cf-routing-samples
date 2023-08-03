@@ -1,0 +1,10 @@
+---
+applications:
+  - name: python-http2-test
+    disk_quota: 512M
+    memory: 512M
+    buildpacks:
+      - https://github.com/cloudfoundry/python-buildpack
+    routes:
+      - route: python-http2-test.((domain))
+        protocol: http2

@@ -1,0 +1,10 @@
+---
+applications:
+  - name: node-http2-test
+    disk_quota: 256M
+    memory: 256M
+    buildpacks:
+      - https://github.com/cloudfoundry/nodejs-buildpack
+    routes:
+      - route: node-http2-test.((domain))
+        protocol: http2

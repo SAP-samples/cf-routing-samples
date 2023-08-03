@@ -1,0 +1,10 @@
+---
+applications:
+  - name: node-grpc-test
+    disk_quota: 256M
+    memory: 256M
+    buildpacks:
+      - https://github.com/cloudfoundry/nodejs-buildpack
+    routes:
+      - route: node-grpc-test.((domain))
+        protocol: http2
