@@ -7,3 +7,6 @@ Pipfile
 Pipfile.lock
 .bundle
 **/ruby-*/vendor
+.idea
+.gradle
+http2/.gradle

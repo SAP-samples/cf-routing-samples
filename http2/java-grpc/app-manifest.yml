@@ -1,0 +1,13 @@
+---
+applications:
+  - name: java-grpc-test
+    disk_quota: 768M
+    memory: 768M
+    path: ./app/build/distributions/app.zip
+    buildpacks:
+      - java_buildpack
+    routes:
+      - route: java-grpc-test.((domain))
+        protocol: http2
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'

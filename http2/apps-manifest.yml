@@ -1,0 +1,114 @@
+---
+version: 1
+stack: &stack
+  stack: cflinuxfs4
+go_defaults: &go_defaults
+  disk_quota: 32M
+  memory: 32M
+java_defaults: &java_defaults
+  disk_quota: 768M
+  memory: 768M
+node_defaults: &node_defaults
+  disk_quota: 256M
+  memory: 256M
+ruby_defaults: &ruby_defaults
+  disk_quota: 256M
+  memory: 256M
+python_defaults: &python_defaults
+  disk_quota: 512M
+  memory: 512M
+applications:
+  - name: go-grpc-test
+    <<: *stack
+    <<: *go_defaults
+    path: ./go-grpc/
+    buildpacks:
+      - go_buildpack
+    routes:
+      - route: go-grpc-test.((domain))
+        protocol: http2
+  - name: go-http2-test
+    <<: *stack
+    <<: *go_defaults
+    path: ./go-http2/
+    buildpacks:
+      - go_buildpack
+    routes:
+      - route: go-http2-test.((domain))
+        protocol: http2
+  - name: java-grpc-test
+    <<: *stack
+    <<: *java_defaults
+    path: ./java-grpc/app/build/distributions/app-((version)).zip
+    buildpacks:
+      - java_buildpack
+    routes:
+      - route: java-grpc-test.((domain))
+        protocol: http2
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'
+  - name: java-http2-test
+    <<: *stack
+    <<: *java_defaults
+    path: ./java-http2/app/build/distributions/app-((version)).zip
+    buildpacks:
+      - java_buildpack
+    routes:
+      - route: java-http2-test.((domain))
+        protocol: http2
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'
+  - name: node-grpc-test
+    <<: *stack
+    <<: *node_defaults
+    path: ./node-grpc/
+    buildpacks:
+      - https://github.com/cloudfoundry/nodejs-buildpack
+    routes:
+      - route: node-grpc-test.((domain))
+        protocol: http2
+  - name: node-http2-test
+    <<: *stack
+    <<: *node_defaults
+    path: ./node-http2/
+    buildpacks:
+      - https://github.com/cloudfoundry/nodejs-buildpack
+    routes:
+      - route: node-http2-test.((domain))
+        protocol: http2
+  - name: python-grpc-test
+    <<: *stack
+    <<: *python_defaults
+    path: ./python-grpc/
+    buildpacks:
+      - https://github.com/cloudfoundry/python-buildpack
+    routes:
+      - route: python-grpc-test.((domain))
+        protocol: http2
+  - name: python-http2-test
+    <<: *stack
+    <<: *python_defaults
+    path: ./python-http2/
+    buildpacks:
+      - https://github.com/cloudfoundry/python-buildpack
+    routes:
+      - route: python-http2-test.((domain))
+        protocol: http2
+  - name: ruby-grpc-test
+    <<: *stack
+    <<: *ruby_defaults
+    path: ./ruby-grpc/
+    buildpacks:
+      - https://github.com/cloudfoundry/ruby-buildpack
+    routes:
+      - route: ruby-grpc-test.((domain))
+        protocol: http2
+  - name: ruby-http2-test
+    <<: *stack
+    <<: *ruby_defaults
+    path: ./ruby-http2/
+    buildpacks:
+      - https://github.com/cloudfoundry/ruby-buildpack
+    routes:
+      - route: ruby-http2-test.((domain))
+        protocol: http2

@@ -1,0 +1,10 @@
+---
+applications:
+  - name: ruby-http2-test
+    disk_quota: 256M
+    memory: 256M
+    buildpacks:
+      - https://github.com/cloudfoundry/ruby-buildpack
+    routes:
+      - route: ruby-http2-test.((domain))
+        protocol: http2

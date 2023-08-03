@@ -11,107 +11,82 @@ Note: due to the lack of H2C support in popular frameworks, the Ruby and Python 
 
 ## Downloading the Samples
 
-Clone this repo and go to the app you want to test
+Clone this repo 
 
 ```shell
 # Skip this if you cloned the repository already
 > git clone https://github.com/SAP-samples/cf-routing-samples
 > cd cf-routing-samples/http2
 
-# Depending on the app you want to try, go into that respective directory, e.g. go-http2
-> cd go-http2
+```
+## Deploying all the apps at once
+### Pre-requisites
+Set the desired domain in [vars.yml](vars.yml) file:
+```shell
+# edit the vars.yml file and replace <domain.for.app.routes> with required domain
+# my.cf.app.domain is used as an example for demonstration
+> vi vars.yml
+> cat vars.yml
+domain: my.cf.app.domain
 ```
 
-### How to deploy H2C apps
-
-Make sure you have [CF CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) version 8 or higher installed
+#### For java app do the following
+```shell
+# please make sure that the openjdk@11 is installed and gradle wrapper is pointing to it
+> ./gradlew clean build
+```
+### Deploy all apps
+```shell
+# run the following commands in cf environment
+> cd http2
+> export DOMAIN=my.cf.app.domain
+> cf push --manifest apps-manifest.yml --var domain=$DOMAIN --vars-file gradle.properties
+```
+## Deploying apps individually 
+* Make sure you have [CF CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) version 8 or higher installed
 
 ```shell
 > cf version
 cf version 8.0.0+e8d41cf8e.2021-09-16
 ```
-
-Clone this repo and go to the app you want to test
-
+* And set the desired domain in [vars.yml](vars.yml) file
+### How to deploy H2C apps
+* Go: [go-http2](go-http2)
+* Java: [java-http2](java-http2) (Note: refer [pre-requisites](#For java app do the following) for Java)
+* Node: [node-http2](node-http2)
+* Python: [python-http2](python-http2)
+* Ruby: [ruby-http2](ruby-http2)
+#### Check H2C apps
 ```shell
-> git clone https://github.com/SAP-samples/cf-routing-samples
-> cd cf-routing-samples/http2
-```
-
-Build the app (Java apps only)
-
-```shell
-> ./gradlew build
-```
-
-Choose a name and push the application without adding a route
-
-```shell
-> cf push --no-route http2-example-app-go
-
-# For the Java app, specify the path to the distribution zip
-> cf push --no-route http2-example-app-java --buildpack java_buildpack --path app/build/distributions/app.zip
-```
-
-Map an HTTP2 route with the application
-
-```shell
-> export CF_APPS_DOMAIN=my-apps.cf.example.com
-> cf map-route http2-example-app-go $CF_APPS_DOMAIN --hostname http2-example-app-go --destination-protocol http2
-```
-
-Check the app is working
-
-```shell
-> curl https://http2-example-app-go.$CF_APPS_DOMAIN /
-Hello! This Go application is speaking plain text HTTP2 (H2C) with the CF routing layer
+# format: https://<language>-http2-test.my.cf.app.domain
+> export DOMAIN=my.cf.app.domain
+> curl -v --http2-prior-knowledge https://go-http2-test.my.cf.app.$DOMAIN
+> curl -v --http2-prior-knowledge https://java-http2-test.my.cf.app.$DOMAIN
+> curl -v --http2-prior-knowledge https://node-http2-test.my.cf.app.$DOMAIN
+> curl -v --http2-prior-knowledge https://python-http2-test.my.cf.app.$DOMAIN
+> curl -v --http2-prior-knowledge https://ruby-http2-test.my.cf.app.$DOMAIN
 ```
 
 ### How to deploy gRPC apps
-
-Make sure you have [CF CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) version 8 or higher installed
-
-```shell
-> cf version
-cf version 8.0.0+e8d41cf8e.2021-09-16
-```
-
-Build the app (Java apps only)
-
-```shell
-> ./gradlew build
-```
-
-Choose a name and push the application without adding a route
-
-```shell
-> cf push --no-route grpc-example-app-go
-
-# For the Java app, specify the path to the distribution zip
-> cf push --no-route grpc-example-app-java --buildpack java_buildpack --path app/build/distributions/app.zip
-```
-
-Map an HTTP2 route with the application. It must be a route on an apps domain supporting mutual TLS (mTLS) and you must have the client certificate and private key available on your machine
-
-```shell
-> export CF_MTLS_APPS_DOMAIN=my-mtls-apps.cf.example.com
-> cf map-route grpc-example-app-go $CF_MTLS_APPS_DOMAIN --hostname grpc-example-app-go --destination-protocol http2
-```
-
+* Go: [go-grpc](go-grpc)
+* Java: [java-grpc](java-grpc) (Note: refer [pre-req](#For java app do the following) for Java)
+* Node: [node-grpc](node-grpc)
+* Python: [python-grpc](python-grpc)
+* Ruby: [ruby-grpc](ruby-grpc)
+#### Check gRPC apps
 Download grpcurl from https://github.com/fullstorydev/grpcurl/releases and put it in your path
-
 Make a gRPC request using grpcurl
-
 ```shell
+# following example with mtls
 > export MTLS_CERT_PATH=path/to/mtls_client_certificate.pem
 > export MTLS_KEY_PATH=path/to/mtls_client_private_key.pem
-> grpcurl -insecure -cert $MTLS_CERT_PATH -key $MTLS_KEY_PATH grpc-example-app-go.$CF_MTLS_APPS_DOMAIN:443 example.Example.Run
+> grpcurl -insecure -cert $MTLS_CERT_PATH -key $MTLS_KEY_PATH go-grpc-test.my.cf.app.domain:443 example.Example.Run
 {
   "message": "Hello! This Go application is speaking gRPC"
 }
 
 # Alternative grpcurl for apps which don't support reflection (such as Node.js)
-> grpcurl -proto example.proto -insecure -cert $MTLS_CERT_PATH -key $MTLS_KEY_PATH grpc-example-app-node.$CF_MTLS_APPS_DOMAIN:443 Example.Run
+> grpcurl -proto path/to/example.proto -insecure -cert $MTLS_CERT_PATH -key $MTLS_KEY_PATH node-grpc-test.my.cf.app.domain:443 Example.Run
 {
   "message": "Hello! This Node.JS application is speaking gRPC"
 }

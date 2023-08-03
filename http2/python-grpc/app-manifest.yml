@@ -1,0 +1,10 @@
+---
+applications:
+  - name: python-grpc-test
+    disk_quota: 512M
+    memory: 512M
+    buildpacks:
+      - https://github.com/cloudfoundry/python-buildpack
+    routes:
+      - route: python-grpc-test.((domain))
+        protocol: http2
