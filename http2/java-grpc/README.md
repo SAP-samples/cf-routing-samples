@@ -9,20 +9,20 @@ Please follow [the install setup for Java](../README.md#for-java-app-do-the-foll
 
 Deploy the app
 ```shell
-> export DOMAIN=my.cf.app.domain
-> cf push -f app-manifest.yml --var domain=$DOMAIN
+export DOMAIN=my.cf.app.domain
+cf push -f app-manifest.yml --var domain=$DOMAIN
 ```
 ### Deploy the app without the manifest file
 ```shell
-> cf push --no-route java-grpc-test --buildpack java_buildpack --path ./app/build/distributions/app.zip
+cf push --no-route java-grpc-test --buildpack java_buildpack --path ./app/build/distributions/app.zip
 # my.cf.app.domain is used as an example for demonstration purpose
-> cf map-route java-grpc-test my.cf.app.domain --hostname java-grpc-test --app-protocol http2
+cf map-route java-grpc-test my.cf.app.domain --hostname java-grpc-test --app-protocol http2
 ```
 
 ## Testing the Java app
 `grpcurl` needs to be [installed separately](https://github.com/fullstorydev/grpcurl).
 ```shell
-> grpcurl -proto app/src/main/proto/example.proto java-grpc-test.my.cf.app.domain:443 example.Example.Run 
+grpcurl -proto app/src/main/proto/example.proto java-grpc-test.my.cf.app.domain:443 example.Example.Run 
 ```
 ## Building and running on the local machine
 

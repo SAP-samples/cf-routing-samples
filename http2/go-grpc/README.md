@@ -5,21 +5,21 @@ Example gRPC server implemented in Go
 ### Deploy the app using the manifest file
 Deploy the app
 ```shell
-> export DOMAIN=my.cf.app.domain
-> cf push -f app-manifest.yml --var domain=$DOMAIN
+export DOMAIN=my.cf.app.domain
+cf push -f app-manifest.yml --var domain=$DOMAIN
 ```
 
 ### Deploy the app without the manifest file
 ```shell
-> cf push --no-route go-grpc-test --buildpack go_buildpack 
+cf push --no-route go-grpc-test --buildpack go_buildpack 
 # my.cf.app.domain is used as an example for demonstration purpose
-> cf map-route go-grpc-test my.cf.app.domain --hostname go-grpc-test --app-protocol http2
+cf map-route go-grpc-test my.cf.app.domain --hostname go-grpc-test --app-protocol http2
 ```
 
 ## Testing the Go app
 `grpcurl` needs to be [installed separately](https://github.com/fullstorydev/grpcurl).
 ```shell
-> grpcurl go-grpc-test.my.cf.app.domain:443 example.Example.Run 
+grpcurl go-grpc-test.my.cf.app.domain:443 example.Example.Run 
 ```
 
 ## Building and running on the local machine
