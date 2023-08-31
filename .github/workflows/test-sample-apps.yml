@@ -1,0 +1,68 @@
+name: TEST
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sample-app-test:
+    runs-on: ubuntu-latest
+    concurrency: test-landscape
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup java/jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+          java-package: jdk
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 'stable'
+      - name: Install grpcurl
+        run: go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+      - name: Install yq
+        run: |
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
+      - name: Install CloudFoundry cf cli
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf8-cli -y
+          cf8 --version
+      - name: Build Java apps
+        run: ./http2/gradlew clean build -p http2
+      - name: Logging into target CloudFoundry
+        run: cf8 login -a "${{ secrets.CF_API }}" -u "${{ secrets.CF_USERNAME }}" -p "${{ secrets.CF_PASSWORD }}" -o "${{ secrets.CF_ORG }}" -s "${{ secrets.CF_SPACE }}" --origin uaa
+      - name: Deploy CloudFoundry sample apps
+        run: cf8 push -f "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" --var domain=${{ secrets.CF_DOMAIN }} --vars-file "${GITHUB_WORKSPACE}/http2/gradle.properties"
+      - name: Test Sample apps
+        run: |
+          echo "### Testing HTTP2_APP app ###"
+          yq e '.applications.[].name' "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" | grep -i 'http2' | while read -r HTTP2_APP; do
+              echo "curl -v --http2-prior-knowledge -H 'Connection: close' 'https://$HTTP2_APP.${{ secrets.CF_DOMAIN }}'"
+              curl -v --http2-prior-knowledge -H "Connection: close" "https://$HTTP2_APP.${{ secrets.CF_DOMAIN }}"
+          done
+          echo "Testing GRPC apps"
+          grpcurl go-grpc-test.${{ secrets.CF_DOMAIN }}:443 example.Example.Run
+          grpcurl -proto http2/java-grpc/app/src/main/proto/example.proto java-grpc-test.${{ secrets.CF_DOMAIN }}:443 example.Example.Run 
+          grpcurl -proto http2/node-grpc/example.proto node-grpc-test.${{ secrets.CF_DOMAIN }}:443 Example.Run 
+          grpcurl -proto http2/python-grpc/example.proto python-grpc-test.${{ secrets.CF_DOMAIN }}:443 Example.Run
+          grpcurl -proto http2/ruby-grpc/example.proto ruby-grpc-test.${{ secrets.CF_DOMAIN }}:443 Example.Run
+      - name: Clean-up
+        if: success() || failure()
+        run: |
+          echo "Deleting apps and routes"
+          yq e '.applications.[].name' "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" | while read -r app_name; do
+              echo "Deleting app: $app_name"
+              cf8 delete "$app_name" -r -f
+          done
