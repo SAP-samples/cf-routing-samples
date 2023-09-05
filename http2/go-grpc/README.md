@@ -1,4 +1,4 @@
-# Go gRPC Sample
+# Go gRPC Sample.
 
 Example gRPC server implemented in Go
 ## Deploying the Go app
