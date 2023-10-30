@@ -3,13 +3,14 @@ name: TEST
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  pull_request_target:
 
 jobs:
   sample-app-test:
+    if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     concurrency: test-landscape
+    environment: cf_env
     steps:
       - name: Checkout
         uses: actions/checkout@v3
