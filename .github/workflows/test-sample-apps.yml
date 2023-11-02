@@ -4,12 +4,13 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   sample-app-test:
     runs-on: ubuntu-latest
     concurrency: test-landscape
+    environment: cf_env
     steps:
       - name: Checkout
         uses: actions/checkout@v3
