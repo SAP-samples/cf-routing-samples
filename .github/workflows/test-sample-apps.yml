@@ -1,9 +1,8 @@
 name: TEST
 
 on:
-  push:
-    branches: [ main ]
   pull_request_target:
+    types: [opened, synchronize, reopened]
 
 jobs:
   sample-app-test:
@@ -43,10 +42,13 @@ jobs:
       - name: Build Java apps
         run: ./http2/gradlew clean build -p http2
       - name: Logging into target CloudFoundry
+        if: github.actor == 'dependabot[bot]'
         run: cf8 login -a "${{ secrets.CF_API }}" -u "${{ secrets.CF_USERNAME }}" -p "${{ secrets.CF_PASSWORD }}" -o "${{ secrets.CF_ORG }}" -s "${{ secrets.CF_SPACE }}" --origin uaa
       - name: Deploy CloudFoundry sample apps
+        if: github.actor == 'dependabot[bot]'
         run: cf8 push -f "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" --var domain=${{ secrets.CF_DOMAIN }} --vars-file "${GITHUB_WORKSPACE}/http2/gradle.properties"
       - name: Test Sample apps
+        if: github.actor == 'dependabot[bot]'
         run: |
           echo "### Testing HTTP2_APP app ###"
           yq e '.applications.[].name' "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" | grep -i 'http2' | while read -r HTTP2_APP; do
