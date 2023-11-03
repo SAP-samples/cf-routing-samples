@@ -5,12 +5,20 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  pull_request_target:
+    types: [ opened, synchronize, reopened ]
 
 jobs:
   sample-app-test:
     runs-on: ubuntu-latest
     concurrency: test-landscape
+    environment: cf_env
     steps:
+      - name: Limit access
+        if: (github.event_name == 'pull_request' && github.actor == 'dependabot[bot]') || (github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]')
+        run: |
+          echo "Deployment not possible!"
+          exit 1
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup java/jdk
