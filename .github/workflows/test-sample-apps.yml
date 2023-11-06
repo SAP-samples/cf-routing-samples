@@ -3,9 +3,8 @@ name: TEST
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   pull_request_target:
+    branches: [ main ]
     types: [ opened, synchronize, reopened ]
 
 jobs:
@@ -14,8 +13,14 @@ jobs:
     concurrency: test-landscape
     environment: cf_env
     steps:
+      - name: Debug statements
+        run: |
+          echo github.event.head.repo.full_name: "${{ github.event.pull_request.head.repo.fork }}"
       - name: Limit access
-        if: (github.event_name == 'pull_request' && github.actor == 'dependabot[bot]') || (github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]')
+        if: |
+          github.event_name == 'pull_request_target' && 
+          github.actor != 'dependabot[bot]' && 
+          github.event.pull_request.head.repo.fork == 'true'
         run: |
           echo "Deployment not possible!"
           exit 1
