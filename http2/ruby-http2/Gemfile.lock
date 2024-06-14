@@ -1,7 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    http-2 (0.11.0)
+    base64 (0.2.0)
+    http-2 (0.12.0)
+      base64
 
 PLATFORMS
   x86_64-linux
