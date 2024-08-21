@@ -1,6 +1,6 @@
 module github.com/SAP-samples/cf-routing-samples/go-grpc
 
-go 1.17
+go 1.21
 
 require (
 	google.golang.org/grpc v1.65.0
