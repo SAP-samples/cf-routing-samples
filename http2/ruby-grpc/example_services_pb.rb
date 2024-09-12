@@ -2,7 +2,7 @@
 # Source: example.proto for package ''
 
 require 'grpc'
-require './example_pb.rb'
+require './example_pb'
 
 module Example
   class Service

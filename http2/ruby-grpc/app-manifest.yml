@@ -7,3 +7,5 @@ applications:
       - https://github.com/cloudfoundry/ruby-buildpack
     random-route: true
     default-route: false
+    routes:
+      - protocol: http2
