@@ -6,8 +6,7 @@ applications:
     path: ./app/build/distributions/app.zip
     buildpacks:
       - java_buildpack
-    routes:
-      - route: java-http2-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'

@@ -5,6 +5,5 @@ applications:
       - go_buildpack
     disk_quota: 32M
     memory: 32M
-    routes:
-      - route: go-grpc-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false

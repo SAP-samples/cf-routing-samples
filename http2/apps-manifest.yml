@@ -24,27 +24,24 @@ applications:
     path: ./go-grpc/
     buildpacks:
       - go_buildpack
-    routes:
-      - route: go-grpc-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
   - name: go-http2-test
     <<: *stack
     <<: *go_defaults
     path: ./go-http2/
     buildpacks:
       - go_buildpack
-    routes:
-      - route: go-http2-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
   - name: java-grpc-test
     <<: *stack
     <<: *java_defaults
     path: ./java-grpc/app/build/distributions/app-((version)).zip
     buildpacks:
       - java_buildpack
-    routes:
-      - route: java-grpc-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'
   - name: java-http2-test
@@ -53,9 +50,8 @@ applications:
     path: ./java-http2/app/build/distributions/app-((version)).zip
     buildpacks:
       - java_buildpack
-    routes:
-      - route: java-http2-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'
   - name: node-grpc-test
@@ -64,51 +60,45 @@ applications:
     path: ./node-grpc/
     buildpacks:
       - https://github.com/cloudfoundry/nodejs-buildpack
-    routes:
-      - route: node-grpc-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
   - name: node-http2-test
     <<: *stack
     <<: *node_defaults
     path: ./node-http2/
     buildpacks:
       - https://github.com/cloudfoundry/nodejs-buildpack
-    routes:
-      - route: node-http2-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
   - name: python-grpc-test
     <<: *stack
     <<: *python_defaults
     path: ./python-grpc/
     buildpacks:
       - https://github.com/cloudfoundry/python-buildpack
-    routes:
-      - route: python-grpc-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
   - name: python-http2-test
     <<: *stack
     <<: *python_defaults
     path: ./python-http2/
     buildpacks:
       - https://github.com/cloudfoundry/python-buildpack
-    routes:
-      - route: python-http2-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
   - name: ruby-grpc-test
     <<: *stack
     <<: *ruby_defaults
     path: ./ruby-grpc/
     buildpacks:
       - https://github.com/cloudfoundry/ruby-buildpack
-    routes:
-      - route: ruby-grpc-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false
   - name: ruby-http2-test
     <<: *stack
     <<: *ruby_defaults
     path: ./ruby-http2/
     buildpacks:
       - https://github.com/cloudfoundry/ruby-buildpack
-    routes:
-      - route: ruby-http2-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false

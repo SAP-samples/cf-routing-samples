@@ -5,6 +5,5 @@ applications:
     memory: 256M
     buildpacks:
       - https://github.com/cloudfoundry/nodejs-buildpack
-    routes:
-      - route: node-http2-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false

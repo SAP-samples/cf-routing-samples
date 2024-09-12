@@ -5,6 +5,5 @@ applications:
     memory: 256M
     buildpacks:
       - https://github.com/cloudfoundry/ruby-buildpack
-    routes:
-      - route: ruby-grpc-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false

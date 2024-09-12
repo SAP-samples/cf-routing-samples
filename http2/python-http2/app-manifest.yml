@@ -5,6 +5,5 @@ applications:
     memory: 512M
     buildpacks:
       - https://github.com/cloudfoundry/python-buildpack
-    routes:
-      - route: python-http2-test.((domain))
-        protocol: http2
+    random-route: true
+    default-route: false

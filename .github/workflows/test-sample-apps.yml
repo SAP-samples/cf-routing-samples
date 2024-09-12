@@ -64,15 +64,21 @@ jobs:
         run: |
           echo "### Testing HTTP2_APP app ###"
           yq e '.applications.[].name' "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" | grep -i 'http2' | while read -r HTTP2_APP; do
-              echo "curl -v --http2-prior-knowledge -H 'Connection: close' 'https://$HTTP2_APP.${{ secrets.CF_DOMAIN }}'"
-              curl -v --http2-prior-knowledge -H "Connection: close" "https://$HTTP2_APP.${{ secrets.CF_DOMAIN }}"
+              ROUTE=$(cf8 app $HTTP2_APP | grep routes: | awk '{print $2 }')
+              echo "curl -v --http2-prior-knowledge -H 'Connection: close' 'https://$ROUTE.${{ secrets.CF_DOMAIN }}'"
+              curl -v --http2-prior-knowledge -H "Connection: close" "https://$ROUTE.${{ secrets.CF_DOMAIN }}"
           done
           echo "Testing GRPC apps"
-          grpcurl go-grpc-test.${{ secrets.CF_DOMAIN }}:443 example.Example.Run
-          grpcurl -proto http2/java-grpc/app/src/main/proto/example.proto java-grpc-test.${{ secrets.CF_DOMAIN }}:443 example.Example.Run 
-          grpcurl -proto http2/node-grpc/example.proto node-grpc-test.${{ secrets.CF_DOMAIN }}:443 Example.Run 
-          grpcurl -proto http2/python-grpc/example.proto python-grpc-test.${{ secrets.CF_DOMAIN }}:443 Example.Run
-          grpcurl -proto http2/ruby-grpc/example.proto ruby-grpc-test.${{ secrets.CF_DOMAIN }}:443 Example.Run
+          ROUTE=$(cf8 app go-grpc-test | grep routes: | awk '{print $2 }')
+          grpcurl $ROUTE.${{ secrets.CF_DOMAIN }}:443 example.Example.Run
+          ROUTE=$(cf8 app java-grpc-test | grep routes: | awk '{print $2 }')
+          grpcurl -proto http2/java-grpc/app/src/main/proto/example.proto $ROUTE.${{ secrets.CF_DOMAIN }}:443 example.Example.Run 
+          ROUTE=$(cf8 app node-grpc-test | grep routes: | awk '{print $2 }')
+          grpcurl -proto http2/node-grpc/example.proto $ROUTE.${{ secrets.CF_DOMAIN }}:443 Example.Run 
+          ROUTE=$(cf8 app python-grpc-test | grep routes: | awk '{print $2 }')
+          grpcurl -proto http2/python-grpc/example.proto $ROUTE.${{ secrets.CF_DOMAIN }}:443 Example.Run
+          ROUTE=$(cf8 app ruby-grpc-test | grep routes: | awk '{print $2 }')
+          grpcurl -proto http2/ruby-grpc/example.proto $ROUTE.${{ secrets.CF_DOMAIN }}:443 Example.Run
       - name: Clean-up
         if: success() || failure()
         run: |
