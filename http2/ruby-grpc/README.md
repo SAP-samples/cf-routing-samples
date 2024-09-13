@@ -27,7 +27,7 @@ grpcurl -proto example.proto ruby-grpc-test.my.cf.app.domain:443 Example.Run
 2. `PORT=8080 bundle exec ruby server.rb`
 3. `grpcurl -proto example.proto -plaintext localhost:8080 Example.Run`
 
-### Renerating code
+### Regenerating code
 
 ```shell
 bundle install --path vendor/bundle
