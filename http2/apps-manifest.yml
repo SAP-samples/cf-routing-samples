@@ -25,7 +25,7 @@ applications:
     buildpacks:
       - go_buildpack
     routes:
-      - route: go-grpc-test.((domain))
+      - route: ((hostname_prefix))go-grpc-test.((domain))
         protocol: http2
   - name: go-http2-test
     <<: *stack
@@ -34,7 +34,7 @@ applications:
     buildpacks:
       - go_buildpack
     routes:
-      - route: go-http2-test.((domain))
+      - route: ((hostname_prefix))go-http2-test.((domain))
         protocol: http2
   - name: java-grpc-test
     <<: *stack
@@ -43,7 +43,7 @@ applications:
     buildpacks:
       - java_buildpack
     routes:
-      - route: java-grpc-test.((domain))
+      - route: ((hostname_prefix))java-grpc-test.((domain))
         protocol: http2
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'
@@ -54,7 +54,7 @@ applications:
     buildpacks:
       - java_buildpack
     routes:
-      - route: java-http2-test.((domain))
+      - route: ((hostname_prefix))java-http2-test.((domain))
         protocol: http2
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'
@@ -65,7 +65,7 @@ applications:
     buildpacks:
       - https://github.com/cloudfoundry/nodejs-buildpack
     routes:
-      - route: node-grpc-test.((domain))
+      - route: ((hostname_prefix))node-grpc-test.((domain))
         protocol: http2
   - name: node-http2-test
     <<: *stack
@@ -74,7 +74,7 @@ applications:
     buildpacks:
       - https://github.com/cloudfoundry/nodejs-buildpack
     routes:
-      - route: node-http2-test.((domain))
+      - route: ((hostname_prefix))node-http2-test.((domain))
         protocol: http2
   - name: python-grpc-test
     <<: *stack
@@ -83,7 +83,7 @@ applications:
     buildpacks:
       - https://github.com/cloudfoundry/python-buildpack
     routes:
-      - route: python-grpc-test.((domain))
+      - route: ((hostname_prefix))python-grpc-test.((domain))
         protocol: http2
   - name: python-http2-test
     <<: *stack
@@ -92,7 +92,7 @@ applications:
     buildpacks:
       - https://github.com/cloudfoundry/python-buildpack
     routes:
-      - route: python-http2-test.((domain))
+      - route: ((hostname_prefix))python-http2-test.((domain))
         protocol: http2
   - name: ruby-grpc-test
     <<: *stack
@@ -101,7 +101,7 @@ applications:
     buildpacks:
       - https://github.com/cloudfoundry/ruby-buildpack
     routes:
-      - route: ruby-grpc-test.((domain))
+      - route: ((hostname_prefix))ruby-grpc-test.((domain))
         protocol: http2
   - name: ruby-http2-test
     <<: *stack
@@ -110,5 +110,5 @@ applications:
     buildpacks:
       - https://github.com/cloudfoundry/ruby-buildpack
     routes:
-      - route: ruby-http2-test.((domain))
+      - route: ((hostname_prefix))ruby-http2-test.((domain))
         protocol: http2
