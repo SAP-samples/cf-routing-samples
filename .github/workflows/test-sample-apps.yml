@@ -61,7 +61,7 @@ jobs:
       - name: Logging into target CloudFoundry
         run: cf8 login -a "${{ secrets.CF_API }}" -u "${{ secrets.CF_USERNAME }}" -p "${{ secrets.CF_PASSWORD }}" -o "${{ secrets.CF_ORG }}" -s "${{ secrets.CF_SPACE }}" --origin uaa
       - name: Deploy CloudFoundry sample apps
-        run: cf8 push -f "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" --var domain=${{ secrets.CF_DOMAIN }} --VAR hostname_prefix="$HOSTNAME_PREFIX" --vars-file "${GITHUB_WORKSPACE}/http2/gradle.properties"
+        run: cf8 push -f "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" --var domain=${{ secrets.CF_DOMAIN }} --var hostname_prefix="$HOSTNAME_PREFIX" --vars-file "${GITHUB_WORKSPACE}/http2/gradle.properties"
       - name: Test Sample apps
         run: |
           get_route() {
