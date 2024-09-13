@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     concurrency: test-landscape
     environment: cf_env
+    env:
+      HOSTNAME_PREFIX: gh-run-${{ github.run_id }}-
     steps:
       - name: Limit access
         if: |
@@ -56,37 +58,25 @@ jobs:
           cf8 --version
       - name: Build Java apps
         run: ./http2/gradlew clean build -p http2
-      - name: Remove routes from manifest
-        run: yq 'del(.applications[].routes)' -i "${GITHUB_WORKSPACE}/http2/apps-manifest.yml"
       - name: Logging into target CloudFoundry
         run: cf8 login -a "${{ secrets.CF_API }}" -u "${{ secrets.CF_USERNAME }}" -p "${{ secrets.CF_PASSWORD }}" -o "${{ secrets.CF_ORG }}" -s "${{ secrets.CF_SPACE }}" --origin uaa
       - name: Deploy CloudFoundry sample apps
-        run: cf8 push -f "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" --var domain=${{ secrets.CF_DOMAIN }} --vars-file "${GITHUB_WORKSPACE}/http2/gradle.properties"
+        run: cf8 push -f "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" --var domain=${{ secrets.CF_DOMAIN }} --VAR hostname_prefix="$HOSTNAME_PREFIX" --vars-file "${GITHUB_WORKSPACE}/http2/gradle.properties"
       - name: Test Sample apps
         run: |
+          get_route() {
+            echo "${HOSTNAME_PREFIX}${1}.${{ secrets.CF_DOMAIN }}"
+          }
           echo "### Testing HTTP2_APP app ###"
           yq e '.applications.[].name' "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" | grep -i 'http2' | while read -r HTTP2_APP; do
-              ROUTE=${{ github.run_id }}-$HTTP2_APP
-              cf8 map-route $HTTP2_APP ${{ secrets.CF_DOMAIN }} --hostname $ROUTE --app-protocol http2
-              echo "curl -v --http2-prior-knowledge -H 'Connection: close' 'https://$ROUTE.${{ secrets.CF_DOMAIN }}'"
-              curl -v --http2-prior-knowledge -H "Connection: close" "https://$ROUTE.${{ secrets.CF_DOMAIN }}"
+              curl -v --http2-prior-knowledge -H 'Connection: close' "https://$(get_route "$HTTP2_APP")"
           done
           echo "Testing GRPC apps"
-          ROUTE=${{ github.run_id }}-go-grpc-test
-          cf8 map-route go-grpc-test ${{ secrets.CF_DOMAIN }} --hostname $ROUTE --app-protocol http2
-          grpcurl $ROUTE.${{ secrets.CF_DOMAIN }}:443 example.Example.Run
-          ROUTE=${{ github.run_id }}-java-grpc-test
-          cf8 map-route java-grpc-test ${{ secrets.CF_DOMAIN }} --hostname $ROUTE --app-protocol http2
-          grpcurl -proto http2/java-grpc/app/src/main/proto/example.proto $ROUTE.${{ secrets.CF_DOMAIN }}:443 example.Example.Run 
-          ROUTE=${{ github.run_id }}-node-grpc-test
-          cf8 map-route node-grpc-test ${{ secrets.CF_DOMAIN }} --hostname $ROUTE --app-protocol http2
-          grpcurl -proto http2/node-grpc/example.proto $ROUTE.${{ secrets.CF_DOMAIN }}:443 Example.Run 
-          ROUTE=${{ github.run_id }}-python-grpc-test
-          cf8 map-route python-grpc-test ${{ secrets.CF_DOMAIN }} --hostname $ROUTE --app-protocol http2
-          grpcurl -proto http2/python-grpc/example.proto $ROUTE.${{ secrets.CF_DOMAIN }}:443 Example.Run
-          ROUTE=${{ github.run_id }}-ruby-grpc-test
-          cf8 map-route ruby-grpc-test ${{ secrets.CF_DOMAIN }} --hostname $ROUTE --app-protocol http2
-          grpcurl -proto http2/ruby-grpc/example.proto $ROUTE.${{ secrets.CF_DOMAIN }}:443 Example.Run
+          grpcurl $(get_route go-grpc-test):443 example.Example.Run
+          grpcurl -proto http2/java-grpc/app/src/main/proto/example.proto $(get_route java-grpc-test):443 Example.Run
+          grpcurl -proto http2/node-grpc/example.proto $(get_route node-grpc-test):443 Example.Run
+          grpcurl -proto http2/python-grpc/example.proto $(get_route python-grpc-test):443 Example.Run
+          grpcurl -proto http2/ruby-grpc/example.proto $(get_route ruby-grpc-test):443 Example.Run
       - name: Clean-up
         if: success() || failure()
         run: |
