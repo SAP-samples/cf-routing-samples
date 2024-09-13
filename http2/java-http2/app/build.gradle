@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation platform('io.projectreactor:reactor-bom:2023.0.9')
+    implementation platform('io.projectreactor:reactor-bom:2023.0.10')
     implementation 'io.projectreactor.netty:reactor-netty-core'
     implementation 'io.projectreactor.netty:reactor-netty-http'
 }
