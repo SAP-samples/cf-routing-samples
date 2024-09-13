@@ -73,7 +73,7 @@ jobs:
           done
           echo "Testing GRPC apps"
           grpcurl $(get_route go-grpc-test):443 example.Example.Run
-          grpcurl -proto http2/java-grpc/app/src/main/proto/example.proto $(get_route java-grpc-test):443 Example.Run
+          grpcurl -proto http2/java-grpc/app/src/main/proto/example.proto $(get_route java-grpc-test):443 example.Example.Run
           grpcurl -proto http2/node-grpc/example.proto $(get_route node-grpc-test):443 Example.Run
           grpcurl -proto http2/python-grpc/example.proto $(get_route python-grpc-test):443 Example.Run
           grpcurl -proto http2/ruby-grpc/example.proto $(get_route ruby-grpc-test):443 Example.Run
