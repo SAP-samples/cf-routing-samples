@@ -1,2 +1,2 @@
-grpcio-reflection==1.68.1
+grpcio-reflection==1.69.0
 grpcio==1.69.0
