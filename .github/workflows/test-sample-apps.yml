@@ -45,10 +45,7 @@ jobs:
       - name: Install grpcurl
         run: go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
       - name: Install yq
-        run: |
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt update
-          sudo apt install yq -y
+        run: go install github.com/mikefarah/yq/v4@latest
       - name: Install CloudFoundry cf cli
         run: |
           wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
