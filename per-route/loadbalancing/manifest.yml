@@ -1,0 +1,15 @@
+applications:
+- name: per-route-loadbalancing-demo
+  instances: 3
+  buildpacks:
+  - go_buildpack
+  disk_quota: 64M
+  memory: 64M
+  routes:
+  - route: per-route-lb.((domain))
+  - route: per-route-lb-lc.((domain))
+    options:
+      loadbalancing: least-connection
+  - route: per-route-lb-rr.((domain))
+    options:
+      loadbalancing: round-robin
