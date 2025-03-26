@@ -20,6 +20,7 @@ func main() {
 	c := http.DefaultClient
 
 	if len(os.Args) < 2 {
+		fmt.Printf("Usage: %s TARGET_URL\n", os.Args[0])
 		fmt.Println("error: please provide the target URL as first argument")
 		os.Exit(1)
 	}
