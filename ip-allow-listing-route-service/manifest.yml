@@ -1,0 +1,10 @@
+applications:
+- name: ip-allow-listing-route-service
+  buildpacks:
+  - go_buildpack
+  memory: 128M
+  instances: 1
+  env:
+    ALLOW_LIST_FILE: allowlist.txt
+  routes:
+  - route: ip-allow-list-rs-((suffix)).((domain))
