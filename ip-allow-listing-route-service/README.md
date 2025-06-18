@@ -12,9 +12,9 @@ case on [SAP BTP, Cloud Foundry runtime](https://www.sap.com/products/technology
 > This is a sample application that is only intended to demonstrate the general idea. It is not
 > production grade.
 
-To deploy the application you will first need an application you want to put this in front of, as
-well as an allow-list. The allow-list should contain one CIDR per line, empty lines and lines
-starting with a `#` are ignored. Example:
+To deploy this route-service you will first need a separate application you want to put this in
+front of, as well as an allow-list. The allow-list should contain one CIDR per line, empty lines
+and lines starting with a `#` are ignored. Example:
 
 ```
 # This is a comment
@@ -44,4 +44,5 @@ cf bind-route-service <DOMAIN> --hostname <HOST> allow-listing
 See the help pages of the individual commands for extended options.
 
 Now every request sent to the route you have bound the route-service to will pass through the
-allow-listing route-service and is only forwarded if the client IP adress is allow-listed.
+allow-listing route-service and is only forwarded to the target application if the client IP
+address is allow-listed.
