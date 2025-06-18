@@ -146,16 +146,17 @@ type transport struct {
 }
 
 func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
+	// This indicates that an issue was encountered while trying to read the forwarded URL.
 	if req.URL == nil {
 		return nil, ErrMissingOrInvalidForwardedURL
 	}
 
-	as := req.Header.Get("x-cf-true-client-ip")
-	if as == "" {
+	addrString := req.Header.Get("x-cf-true-client-ip")
+	if addrString == "" {
 		return nil, ErrMissingTrueClientIP
 	}
 
-	a, err := netip.ParseAddr(as)
+	addr, err := netip.ParseAddr(addrString)
 	if err != nil {
 		return nil, fmt.Errorf("%w: %w", ErrInvalidTrueClientIP, err)
 	}
@@ -164,14 +165,14 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 	// use some form of trie for efficient lookups.
 	allowed := false
 	for _, p := range t.allowedPrefixes {
-		if p.Contains(a) {
+		if p.Contains(addr) {
 			allowed = true
 			break
 		}
 	}
 
 	if !allowed {
-		return nil, fmt.Errorf("%w: address '%s' is not in allow-list", ErrForbidden, a.String())
+		return nil, fmt.Errorf("%w: address '%s' is not in allow-list", ErrForbidden, addr.String())
 	}
 
 	return t.roundTripper.RoundTrip(req)
