@@ -90,6 +90,8 @@ func loadPrefixes(path string) (prefixes []netip.Prefix, err error) {
 func proxyDirector(req *http.Request) {
 	log := slog.With("component", "proxy-director", "vcap-id", req.Header.Get("x-vcap-request-id"))
 
+	log.Info("handling request", "client-ip", req.RemoteAddr)
+
 	forwardedURL := req.Header.Get("x-cf-forwarded-url")
 	if forwardedURL == "" {
 		log.Error("missing x-cf-forwarded-url header")
@@ -105,6 +107,8 @@ func proxyDirector(req *http.Request) {
 		req.Host = ""
 		return // the transport will deal with that
 	}
+
+	log.Debug("obtained forwarded URL", "forwarded-url", u.String())
 
 	req.URL = u
 	req.Host = u.Host
