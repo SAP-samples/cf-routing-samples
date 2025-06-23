@@ -29,16 +29,16 @@ Put this file into the app directory next to the manifest file and name it `allo
 can push the application like this (you may need to adjust the domain depending on the region):
 
 ```
-cf push -f ./manifest.yml --var domain=cfapps.eu10.hana.ondemand.com --var suffix=foo
+cf push -f ./manifest.yml --var domain=cfapps.example.com --var suffix=foo
 ```
 
-This pushes the app and makes it available at `ip-allow-list-rs-foo.cfapps.eu10.hana.ondemand.com`.
+This pushes the app and makes it available at `ip-allow-list-rs-foo.cfapps.example.com`.
 Now we can turn it into a route service and bind it to an already existing route, provide the
 domain and host of the route you want restrict access to:
 
 ```
-cf create-user-provided-service allow-listing -r https://ip-allow-listing-rs-foo.cfapps.eu10.hana.ondemand.com
-cf bind-route-service <DOMAIN> --hostname <HOST> allow-listing
+cf create-user-provided-service allow-listing -r https://ip-allow-listing-rs-foo.cfapps.example.com
+cf bind-route-service cfapps.example.com --hostname my-app allow-listing
 ```
 
 See the help pages of the individual commands for extended options.
