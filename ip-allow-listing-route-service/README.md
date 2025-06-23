@@ -13,8 +13,8 @@ case on [SAP BTP, Cloud Foundry runtime](https://www.sap.com/products/technology
 > production grade.
 
 To deploy this route-service you will first need a separate application you want to put this in
-front of, as well as an allow-list. The allow-list should contain one CIDR per line, empty lines
-and lines starting with a `#` are ignored. Example:
+front of, as well as an allow-list. The allow-list should contain one IP-prefix per line, empty
+lines and lines starting with a `#` are ignored. Example:
 
 ```
 # This is a comment
