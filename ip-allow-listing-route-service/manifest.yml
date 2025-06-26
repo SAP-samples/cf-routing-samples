@@ -1,10 +1,9 @@
 applications:
 - name: ip-allow-listing-route-service
+  lifecycle: cnb
   buildpacks:
-  - go_buildpack
+  - docker://docker.io/paketobuildpacks/go
   memory: 128M
   instances: 1
-  env:
-    ALLOW_LIST_FILE: allowlist.txt
   routes:
   - route: ip-allow-list-rs-((suffix)).((domain))

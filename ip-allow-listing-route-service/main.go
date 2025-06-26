@@ -2,6 +2,8 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	_ "embed"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -21,6 +23,9 @@ var (
 	ErrInvalidTrueClientIP          = fmt.Errorf("%w: invalid x-cf-true-client-ip header", ErrBadRequest)
 )
 
+//go:embed allowlist.txt
+var allowListFile []byte
+
 func main() {
 	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelDebug})))
 
@@ -32,12 +37,7 @@ func main() {
 }
 
 func Main() error {
-	allowListFile := os.Getenv("ALLOW_LIST_FILE")
-	if allowListFile == "" {
-		return fmt.Errorf("no file to read prefixes from provided")
-	}
-
-	allowedPrefixes, err := loadPrefixes(allowListFile)
+	allowedPrefixes, err := loadPrefixes()
 	if err != nil {
 		return err
 	}
@@ -59,13 +59,8 @@ func Main() error {
 	return s.ListenAndServe()
 }
 
-func loadPrefixes(path string) (prefixes []netip.Prefix, err error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-
-	s := bufio.NewScanner(f)
+func loadPrefixes() (prefixes []netip.Prefix, err error) {
+	s := bufio.NewScanner(bytes.NewReader(allowListFile))
 	for s.Scan() {
 		l := strings.TrimSpace(s.Text())
 		if len(l) == 0 || l[0] == '#' {
