@@ -7,3 +7,12 @@ applications:
   instances: 1
   routes:
   - route: ip-allow-list-rs-((suffix)).((domain))
+- name: ok
+  path: ./ok
+  lifecycle: cnb
+  buildpacks:
+  - docker://docker.io/paketobuildpacks/go
+  memory: 64M
+  instances: 1
+  routes:
+  - route: ok-((suffix)).((domain))
