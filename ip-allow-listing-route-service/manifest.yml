@@ -1,5 +1,6 @@
 applications:
 - name: ip-allow-listing-route-service
+  path: .
   lifecycle: cnb
   buildpacks:
   - docker://docker.io/paketobuildpacks/go

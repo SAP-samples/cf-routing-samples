@@ -4,6 +4,7 @@ on:
   pull_request_target:
     branches: [ main ]
     types: [ opened, synchronize, reopened ]
+  workflow_dispatch:
 
 permissions:
   pull-requests: write
@@ -57,7 +58,7 @@ jobs:
         run: cf8 login -a "${{ secrets.CF_API }}" -u "${{ secrets.CF_USERNAME }}" -p "${{ secrets.CF_PASSWORD }}" -o "${{ secrets.CF_ORG }}" -s "${{ secrets.CF_SPACE }}" --origin uaa
       - name: Deploy CloudFoundry sample apps
         run: cf8 push -f "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" --var domain=${{ secrets.CF_DOMAIN }} --var hostname_prefix="$HOSTNAME_PREFIX" --vars-file "${GITHUB_WORKSPACE}/http2/gradle.properties"
-      - name: Test Sample apps
+      - name: Test HTTP/2 Sample apps
         run: |
           get_route() {
             echo "${HOSTNAME_PREFIX}${1}.${{ secrets.CF_DOMAIN }}"
@@ -72,13 +73,28 @@ jobs:
           grpcurl -proto http2/node-grpc/example.proto $(get_route node-grpc-test):443 Example.Run
           grpcurl -proto http2/python-grpc/example.proto $(get_route python-grpc-test):443 Example.Run
           grpcurl -proto http2/ruby-grpc/example.proto $(get_route ruby-grpc-test):443 Example.Run
+      - name: Deploy IP Allow-List Sample App
+        run: |
+          cf8 push --var "domain=${{ secrets.CF_DOMAIN }}" --var "suffix=${HOSTNAME_PREFIX}" --manifest "${GITHUB_WORKSPACE}/ip-allow-listing-route-service/manifest.yml"
+          cf8 create-user-provided-service "allow-list-${HOSTNAME_PREFIX}" -r "https://ip-allow-list-rs-${HOSTNAME_PREFIX}.${{ secrets.CF_DOMAIN }}"
+          cf8 bind-route-service "${{ secrets.CF_DOMAIN }}" --hostname "ok-${HOSTNAME_PREFIX}" "allow-list-${HOSTNAME_PREFIX}"
+      - name: Test IP Allow-List Sample App
+        run: |
+          echo "Test IPv4 is accesible"
+          test "$(curl --silent --output /dev/null --write-out "%{http_code}" -4 "https://ok-${HOSTNAME_PREFIX}.cfapps.eu12.hana.ondemand.com")" -eq 200
       - name: Clean-up
         if: success() || failure()
         run: |
+          echo "Deleting service instance"
+          cf8 -f delete-service "allow-list-${HOSTNAME_PREFIX}" || true
           echo "Deleting apps and routes"
           yq e '.applications.[].name' "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" | while read -r app_name; do
               echo "Deleting app: $app_name"
-              cf8 delete "$app_name" -r -f
+              cf8 delete "$app_name" -r -f || true
+          done
+          yq e '.applications.[].name' "${GITHUB_WORKSPACE}/ip-allow-listing-route-service/manifest.yml" | while read -r app_name; do
+              echo "Deleting app: $app_name"
+              cf8 delete "$app_name" -r -f || true
           done
   automerge:
     runs-on: ubuntu-latest
