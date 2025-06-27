@@ -47,3 +47,4 @@ If you want to contribute, please check the [CONTRIBUTING.md](CONTRIBUTING.md) d
 SAP adopts the Contributor's Covenant 2.0 across our open source projects to ensure a welcoming and open culture for everyone involved ([Code of Conduct](CODE_OF_CONDUCT.md)).
 ## License
 Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSES/Apache-2.0.txt) file.
+
