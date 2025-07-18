@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: "refs/pull/${{ github.event.number }}/merge"
+          ref: "refs/pull/251/merge"
       - name: Setup java/jdk
         uses: actions/setup-java@v3
         with:
@@ -96,16 +96,3 @@ jobs:
               echo "Deleting app: $app_name"
               cf8 delete "$app_name" -r -f || true
           done
-  automerge:
-    runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
-    needs: [sample-app-test]
-    steps:
-      - name: Approve
-        run: gh pr review "${{ github.event.pull_request.html_url }}" --approve --body "Auto-approving dependency bump."
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Enable auto-merge
-        run: gh pr merge "${{ github.event.pull_request.html_url }}" --auto --rebase
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
