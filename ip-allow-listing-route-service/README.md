@@ -29,15 +29,15 @@ Put this file into the app directory next to the manifest file and name it `allo
 can push the application like this (you may need to adjust the domain depending on the region):
 
 ```
-cf push -f ./manifest.yml --var domain=cfapps.example.com --var suffix=foo
+cf push -f ./manifest.yml --var domain=cfapps.example.com --var prefix=foo
 ```
 
-This pushes the app and makes it available at `ip-allow-list-rs-foo.cfapps.example.com`.
+This pushes the app and makes it available at `foo-ip-allow-list-rs.cfapps.example.com`.
 Now we can turn it into a route service and bind it to an already existing route, provide the
-domain and host of the route you want restrict access to:
+domain and host of the route you want to restrict access to:
 
 ```
-cf create-user-provided-service allow-listing -r https://ip-allow-listing-rs-foo.cfapps.example.com
+cf create-user-provided-service allow-listing -r https://foo-ip-allow-listing-rs.cfapps.example.com
 cf bind-route-service cfapps.example.com --hostname my-app allow-listing
 ```
 
