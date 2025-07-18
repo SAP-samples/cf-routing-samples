@@ -81,6 +81,7 @@ jobs:
       - name: Test IP Allow-List Sample App
         run: |
           echo "Test IPv4 is accessible"
+          sleep 10
           test "$(curl --silent --output /dev/null --write-out "%{http_code}" -4 "https://ok-${HOSTNAME_PREFIX}.cfapps.eu12.hana.ondemand.com")" -eq 200
       - name: Clean-up
         if: success() || failure()
