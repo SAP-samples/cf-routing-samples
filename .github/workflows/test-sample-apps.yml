@@ -75,14 +75,13 @@ jobs:
           grpcurl -proto http2/ruby-grpc/example.proto $(get_route ruby-grpc-test):443 Example.Run
       - name: Deploy IP Allow-List Sample App
         run: |
-          cf8 push --var "domain=${{ secrets.CF_DOMAIN }}" --var "suffix=${HOSTNAME_PREFIX}" --manifest "${GITHUB_WORKSPACE}/ip-allow-listing-route-service/manifest.yml"
-          cf8 create-user-provided-service "allow-list-${HOSTNAME_PREFIX}" -r "https://ip-allow-list-rs-${HOSTNAME_PREFIX}.${{ secrets.CF_DOMAIN }}"
-          cf8 bind-route-service "${{ secrets.CF_DOMAIN }}" --hostname "ok-${HOSTNAME_PREFIX}" "allow-list-${HOSTNAME_PREFIX}"
+          cf8 push --var "domain=${{ secrets.CF_DOMAIN }}" --var "prefix=${HOSTNAME_PREFIX}" --manifest "${GITHUB_WORKSPACE}/ip-allow-listing-route-service/manifest.yml"
+          cf8 create-user-provided-service "${HOSTNAME_PREFIX}allow-list" -r "https://${HOSTNAME_PREFIX}ip-allow-list-rs.${{ secrets.CF_DOMAIN }}"
+          cf8 bind-route-service "${{ secrets.CF_DOMAIN }}" --hostname "${HOSTNAME_PREFIX}ok" "${HOSTNAME_PREFIX}allow-list"
       - name: Test IP Allow-List Sample App
         run: |
           echo "Test IPv4 is accessible"
-          sleep 10
-          test "$(curl --silent --output /dev/null --write-out "%{http_code}" -4 "https://ok-${HOSTNAME_PREFIX}.cfapps.eu12.hana.ondemand.com")" -eq 200
+          test "$(curl --silent --output /dev/null --write-out "%{http_code}" -4 "https://${HOSTNAME_PREFIX}ok.${{ secrets.CF_DOMAIN }}")" -eq 200
       - name: Clean-up
         if: success() || failure()
         run: |

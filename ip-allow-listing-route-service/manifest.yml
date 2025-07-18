@@ -7,7 +7,7 @@ applications:
   memory: 128M
   instances: 1
   routes:
-  - route: ip-allow-list-rs-((suffix)).((domain))
+  - route: ((prefix))ip-allow-list-rs.((domain))
 - name: ok
   path: ./ok
   lifecycle: cnb
@@ -16,4 +16,4 @@ applications:
   memory: 64M
   instances: 1
   routes:
-  - route: ok-((suffix)).((domain))
+  - route: ((prefix))ok.((domain))
