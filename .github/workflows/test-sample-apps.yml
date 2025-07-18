@@ -56,7 +56,7 @@ jobs:
         run: ./http2/gradlew clean build -p http2
       - name: Logging into target CloudFoundry
         run: cf8 login -a "${{ secrets.CF_API }}" -u "${{ secrets.CF_USERNAME }}" -p "${{ secrets.CF_PASSWORD }}" -o "${{ secrets.CF_ORG }}" -s "${{ secrets.CF_SPACE }}" --origin uaa
-      - name: Deploy CloudFoundry sample apps
+      - name: Deploy HTTP/2 sample apps
         run: cf8 push -f "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" --var domain=${{ secrets.CF_DOMAIN }} --var hostname_prefix="$HOSTNAME_PREFIX" --vars-file "${GITHUB_WORKSPACE}/http2/gradle.properties"
       - name: Test HTTP/2 Sample apps
         run: |
@@ -80,7 +80,7 @@ jobs:
           cf8 bind-route-service "${{ secrets.CF_DOMAIN }}" --hostname "ok-${HOSTNAME_PREFIX}" "allow-list-${HOSTNAME_PREFIX}"
       - name: Test IP Allow-List Sample App
         run: |
-          echo "Test IPv4 is accesible"
+          echo "Test IPv4 is accessible"
           test "$(curl --silent --output /dev/null --write-out "%{http_code}" -4 "https://ok-${HOSTNAME_PREFIX}.cfapps.eu12.hana.ondemand.com")" -eq 200
       - name: Clean-up
         if: success() || failure()
