@@ -86,7 +86,7 @@ jobs:
         if: success() || failure()
         run: |
           echo "Deleting service instance"
-          cf8 -f delete-service "allow-list-${HOSTNAME_PREFIX}" || true
+          cf8 delete-service "allow-list-${HOSTNAME_PREFIX}" -f || true
           echo "Deleting apps and routes"
           yq e '.applications.[].name' "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" | while read -r app_name; do
               echo "Deleting app: $app_name"
