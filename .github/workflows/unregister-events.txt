@@ -1,0 +1,61 @@
+	Time	syslog_shipper	message_host	log_message	bosh_id	message_code	data.route_service_url
+	Jan 13, 2026 @ 06:53:07.275	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	endpoint-unregistered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	https://gh-run-20947315576-ip-allow-list-rs.cfapps.eu12.hana.ondemand.com
+	Jan 13, 2026 @ 06:53:07.275	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	route-unregistered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	-
+	Jan 13, 2026 @ 06:52:20.076	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	endpoint-registered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	https://gh-run-20947315576-ip-allow-list-rs.cfapps.eu12.hana.ondemand.com
+	Jan 13, 2026 @ 06:52:20.076	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	route-registered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	-
+	Jan 13, 2026 @ 06:52:07.064	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	 - 
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	404
+	-
+	Jan 13, 2026 @ 06:52:06.668	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	endpoint-registered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	https://gh-run-20947315576-ip-allow-list-rs.cfapps.eu12.hana.ondemand.com
+	Jan 13, 2026 @ 06:52:06.668	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	endpoint-unregistered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	
+	Jan 13, 2026 @ 06:52:06.668	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	route-unregistered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	-
+	Jan 13, 2026 @ 06:52:01.062	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	endpoint-registered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	
+	Jan 13, 2026 @ 06:52:01.062	gorouter
+	gh-run-20947315576-ok.cfapps.eu12.hana.ondemand.com
+	route-registered
+	89080d05-9ca2-4830-9d72-b353078bdf4a
+	 - 
+	- 
