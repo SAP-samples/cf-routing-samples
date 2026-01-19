@@ -1,6 +1,6 @@
 # Customizable Load Balancing Algorithm Sample App
 
-This sample app demonstrates how to use customizable load balancing algorithms in Cloud Foundry. It allows you to define your own load balancing logic for routing requests to different application instances.
+This sample app demonstrates how to use customizable load balancing algorithms in Cloud Foundry. In this sample, the load balancing algorithm is configured for individual application, independent of the default of the platform.
 
 You can find more information about using customizable load balancing algorithms in the following blog post:
 
