@@ -81,12 +81,28 @@ jobs:
       - name: Test IP Allow-List Sample App
         run: |
           echo "Test IPv4 is accessible"
-          test "$(curl --silent --output /dev/null --write-out "%{http_code}" -4 "https://${HOSTNAME_PREFIX}ok.${{ secrets.CF_DOMAIN }}")" -eq 200
+          # Wait for route update propagation after route-service-binding
+          max_attempts=4
+          attempt=0
+          until [ $attempt -ge $max_attempts ]; do
+            http_code=$(curl --silent --output /dev/null --write-out "%{http_code}" -4 "https://${HOSTNAME_PREFIX}ok.${{ secrets.CF_DOMAIN }}")
+            if [ "$http_code" -eq 200 ]; then
+              echo "Route is accessible (HTTP $http_code)"
+              exit 0
+            fi
+            attempt=$((attempt + 1))
+            if [ $attempt -lt $max_attempts ]; then
+              echo "Route not yet accessible (HTTP $http_code), retrying in 5 seconds... (attempt $attempt/$max_attempts)"
+              sleep 5
+            fi
+          done
+          echo "Route failed to become accessible after $max_attempts attempts (HTTP $http_code)"
+          exit 1
       - name: Clean-up
         if: success() || failure()
         run: |
-          echo "Deleting service instance"
-          cf8 delete-service "allow-list-${HOSTNAME_PREFIX}" -f || true
+          echo "Deleting service instance ${HOSTNAME_PREFIX}allow-list"
+          cf8 delete-service "${HOSTNAME_PREFIX}allow-list" -f || true
           echo "Deleting apps and routes"
           yq e '.applications.[].name' "${GITHUB_WORKSPACE}/http2/apps-manifest.yml" | while read -r app_name; do
               echo "Deleting app: $app_name"
