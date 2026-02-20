@@ -10,7 +10,7 @@ GEM
     grpc (1.78.1)
       google-protobuf (>= 3.25, < 5.0)
       googleapis-common-protos-types (~> 1.0)
-    grpc-tools (1.78.0)
+    grpc-tools (1.78.1)
     rake (13.3.1)
 
 PLATFORMS
