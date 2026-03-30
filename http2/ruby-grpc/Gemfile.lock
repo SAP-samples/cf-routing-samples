@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bigdecimal (4.0.1)
-    google-protobuf (4.33.5)
+    bigdecimal (4.1.0)
+    google-protobuf (4.34.1)
       bigdecimal
-      rake (>= 13)
+      rake (~> 13.3)
     googleapis-common-protos-types (1.22.0)
       google-protobuf (~> 4.26)
-    grpc (1.78.1)
+    grpc (1.80.0)
       google-protobuf (>= 3.25, < 5.0)
       googleapis-common-protos-types (~> 1.0)
     grpc-tools (1.80.0)
