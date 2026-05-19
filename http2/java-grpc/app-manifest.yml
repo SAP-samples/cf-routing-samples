@@ -1,7 +1,7 @@
 ---
 applications:
   - name: java-grpc-test
-    disk_quota: 768M
+    disk_quota: 1G
     memory: 768M
     path: ./app/build/distributions/app.zip
     buildpacks:

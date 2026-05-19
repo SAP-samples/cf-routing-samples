@@ -1,7 +1,7 @@
 ---
 applications:
   - name: python-grpc-test
-    disk_quota: 512M
+    disk_quota: 1G
     memory: 512M
     buildpacks:
       - https://github.com/cloudfoundry/python-buildpack
