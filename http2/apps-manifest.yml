@@ -3,19 +3,19 @@ version: 1
 stack: &stack
   stack: cflinuxfs4
 go_defaults: &go_defaults
-  disk_quota: 32M
+  disk_quota: 512M
   memory: 32M
 java_defaults: &java_defaults
-  disk_quota: 768M
+  disk_quota: 1G
   memory: 768M
 node_defaults: &node_defaults
-  disk_quota: 256M
+  disk_quota: 1G
   memory: 256M
 ruby_defaults: &ruby_defaults
-  disk_quota: 256M
+  disk_quota: 1G
   memory: 256M
 python_defaults: &python_defaults
-  disk_quota: 512M
+  disk_quota: 1G
   memory: 512M
 applications:
   - name: go-grpc-test
