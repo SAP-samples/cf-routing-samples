@@ -13,3 +13,8 @@ applications:
   - route: per-route-lb-rr.((domain))
     options:
       loadbalancing: round-robin
+  - route: per-route-lb-hb.((domain))
+    options:
+      loadbalancing: hash
+      hash_header: http-header-name
+      hash_balance: 1.2      
