@@ -17,4 +17,4 @@ applications:
     options:
       loadbalancing: hash
       hash_header: http-header-name
-      hash_balance: 1.2      
+      hash_balance: 1.2

@@ -98,6 +98,20 @@ jobs:
           done
           echo "Route failed to become accessible after $max_attempts attempts (HTTP $http_code)"
           exit 1
+      - name: Deploy Per-Route Loadbalancing Sample App
+        run: cf8 push --var "domain=${{ secrets.CF_DOMAIN }}" --manifest "${GITHUB_WORKSPACE}/per-route/loadbalancing/manifest.yml"
+      - name: Test Per-Route Loadbalancing Sample App
+        run: |
+          echo "Testing per-route loadbalancing routes"
+          for route in per-route-lb per-route-lb-lc per-route-lb-rr per-route-lb-hb; do
+            echo "Testing route: ${route}.${{ secrets.CF_DOMAIN }}"
+            http_code=$(curl --silent --output /dev/null --write-out "%{http_code}" "https://${route}.${{ secrets.CF_DOMAIN }}/requests")
+            if [ "$http_code" -ne 200 ]; then
+              echo "Route ${route} failed with HTTP $http_code"
+              exit 1
+            fi
+            echo "Route ${route} accessible (HTTP $http_code)"
+          done
       - name: Clean-up
         if: success() || failure()
         run: |
@@ -109,6 +123,10 @@ jobs:
               cf8 delete "$app_name" -r -f || true
           done
           yq e '.applications.[].name' "${GITHUB_WORKSPACE}/ip-allow-listing-route-service/manifest.yml" | while read -r app_name; do
+              echo "Deleting app: $app_name"
+              cf8 delete "$app_name" -r -f || true
+          done
+          yq e '.applications.[].name' "${GITHUB_WORKSPACE}/per-route/loadbalancing/manifest.yml" | while read -r app_name; do
               echo "Deleting app: $app_name"
               cf8 delete "$app_name" -r -f || true
           done
