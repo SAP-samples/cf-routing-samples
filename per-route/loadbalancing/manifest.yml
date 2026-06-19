@@ -6,14 +6,14 @@ applications:
   disk_quota: 512M
   memory: 64M
   routes:
-  - route: per-route-lb.((domain))
-  - route: per-route-lb-lc.((domain))
+  - route: ((hostname_prefix))per-route-lb.((domain))
+  - route: ((hostname_prefix))per-route-lb-lc.((domain))
     options:
       loadbalancing: least-connection
-  - route: per-route-lb-rr.((domain))
+  - route: ((hostname_prefix))per-route-lb-rr.((domain))
     options:
       loadbalancing: round-robin
-  - route: per-route-lb-hb.((domain))
+  - route: ((hostname_prefix))per-route-lb-hb.((domain))
     options:
       loadbalancing: hash
       hash_header: http-header-name
