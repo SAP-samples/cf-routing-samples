@@ -5,7 +5,6 @@ on:
     branches: [ main ]
     types: [ opened, synchronize, reopened ]
   workflow_dispatch:
-
 permissions:
   pull-requests: write
   contents: write
@@ -28,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: "refs/pull/${{ github.event.number }}/merge"
+          ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.number) || '' }}
       - name: Setup java/jdk
         uses: actions/setup-java@v3
         with:
@@ -98,6 +97,20 @@ jobs:
           done
           echo "Route failed to become accessible after $max_attempts attempts (HTTP $http_code)"
           exit 1
+      - name: Deploy Per-Route Loadbalancing Sample App
+        run: cf8 push --var "domain=${{ secrets.CF_DOMAIN }}" --var "hostname_prefix=${HOSTNAME_PREFIX}" --manifest "${GITHUB_WORKSPACE}/per-route/loadbalancing/manifest.yml" --path "${GITHUB_WORKSPACE}/per-route/loadbalancing"
+      - name: Test Per-Route Loadbalancing Sample App
+        run: |
+          echo "Testing per-route loadbalancing routes"
+          for route in per-route-lb per-route-lb-lc per-route-lb-rr per-route-lb-hb; do
+            echo "Testing route: ${HOSTNAME_PREFIX}${route}.${{ secrets.CF_DOMAIN }}"
+            http_code=$(curl --silent --output /dev/null --write-out "%{http_code}" "https://${HOSTNAME_PREFIX}${route}.${{ secrets.CF_DOMAIN }}/requests")
+            if [ "$http_code" -ne 200 ]; then
+              echo "Route ${route} failed with HTTP $http_code"
+              exit 1
+            fi
+            echo "Route ${route} accessible (HTTP $http_code)"
+          done
       - name: Clean-up
         if: success() || failure()
         run: |
@@ -109,6 +122,10 @@ jobs:
               cf8 delete "$app_name" -r -f || true
           done
           yq e '.applications.[].name' "${GITHUB_WORKSPACE}/ip-allow-listing-route-service/manifest.yml" | while read -r app_name; do
+              echo "Deleting app: $app_name"
+              cf8 delete "$app_name" -r -f || true
+          done
+          yq e '.applications.[].name' "${GITHUB_WORKSPACE}/per-route/loadbalancing/manifest.yml" | while read -r app_name; do
               echo "Deleting app: $app_name"
               cf8 delete "$app_name" -r -f || true
           done
