@@ -99,7 +99,7 @@ jobs:
           echo "Route failed to become accessible after $max_attempts attempts (HTTP $http_code)"
           exit 1
       - name: Deploy Per-Route Loadbalancing Sample App
-        run: cf8 push --var "domain=${{ secrets.CF_DOMAIN }}" --var "hostname_prefix=${HOSTNAME_PREFIX}" --manifest "${GITHUB_WORKSPACE}/per-route/loadbalancing/manifest.yml"
+        run: cf8 push --var "domain=${{ secrets.CF_DOMAIN }}" --var "hostname_prefix=${HOSTNAME_PREFIX}" --manifest "${GITHUB_WORKSPACE}/per-route/loadbalancing/manifest.yml" --path "${GITHUB_WORKSPACE}/per-route/loadbalancing"
       - name: Test Per-Route Loadbalancing Sample App
         run: |
           echo "Testing per-route loadbalancing routes"
