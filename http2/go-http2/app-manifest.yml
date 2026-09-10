@@ -3,6 +3,8 @@ applications:
   - name: go-http2-test
     buildpacks:
       - go_buildpack
+    env:
+      GOVERSION: latest
     disk_quota: 512M
     memory: 32M
     routes:

@@ -3,6 +3,8 @@ applications:
   instances: 3
   buildpacks:
   - go_buildpack
+  env:
+    GOVERSION: latest
   disk_quota: 512M
   memory: 64M
   routes:

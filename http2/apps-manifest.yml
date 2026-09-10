@@ -24,6 +24,8 @@ applications:
     path: ./go-grpc/
     buildpacks:
       - go_buildpack
+    env:
+      GOVERSION: latest
     routes:
       - route: ((hostname_prefix))go-grpc-test.((domain))
         protocol: http2
@@ -33,6 +35,8 @@ applications:
     path: ./go-http2/
     buildpacks:
       - go_buildpack
+    env:
+      GOVERSION: latest
     routes:
       - route: ((hostname_prefix))go-http2-test.((domain))
         protocol: http2
