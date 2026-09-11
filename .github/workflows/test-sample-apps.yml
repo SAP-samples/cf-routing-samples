@@ -104,12 +104,23 @@ jobs:
           echo "Testing per-route loadbalancing routes"
           for route in per-route-lb per-route-lb-lc per-route-lb-rr per-route-lb-hb; do
             echo "Testing route: ${HOSTNAME_PREFIX}${route}.${{ secrets.CF_DOMAIN }}"
-            http_code=$(curl --silent --output /dev/null --write-out "%{http_code}" "https://${HOSTNAME_PREFIX}${route}.${{ secrets.CF_DOMAIN }}/requests")
-            if [ "$http_code" -ne 200 ]; then
-              echo "Route ${route} failed with HTTP $http_code"
-              exit 1
-            fi
-            echo "Route ${route} accessible (HTTP $http_code)"
+            max_attempts=4
+            attempt=0
+            until [ $attempt -ge $max_attempts ]; do
+              http_code=$(curl --silent --output /dev/null --write-out "%{http_code}" "https://${HOSTNAME_PREFIX}${route}.${{ secrets.CF_DOMAIN }}/requests")
+              if [ "$http_code" -eq 200 ]; then
+                echo "Route ${route} accessible (HTTP $http_code)"
+                break
+              fi
+              attempt=$((attempt + 1))
+              if [ $attempt -lt $max_attempts ]; then
+                echo "Route ${route} not yet accessible (HTTP $http_code), retrying in 5 seconds... (attempt $attempt/$max_attempts)"
+                sleep 5
+              else
+                echo "Route ${route} failed with HTTP $http_code after $max_attempts attempts"
+                exit 1
+              fi
+            done
           done
       - name: Clean-up
         if: success() || failure()
