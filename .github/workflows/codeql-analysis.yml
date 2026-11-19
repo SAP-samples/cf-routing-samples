@@ -20,6 +20,11 @@ on:
 
 jobs:
   analyze:
+    # Skip checks for fork PRs; continue to analyze same-repository PRs and scheduled runs.
+    if: >-
+      github.event_name == 'schedule' ||
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
     name: Analyze
     runs-on: ubuntu-latest
     permissions:

@@ -11,19 +11,17 @@ permissions:
 
 jobs:
   sample-app-test:
+    # Skip fork PRs before checkout or deployment; allow same-repository PRs and manual runs.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request_target' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     concurrency: test-landscape
     environment: cf_env
     env:
       HOSTNAME_PREFIX: gh-run-${{ github.run_id }}-
     steps:
-      - name: Limit access
-        if: |
-          github.event_name == 'pull_request_target' && 
-          github.event.pull_request.head.repo.fork == 'true'
-        run: |
-          echo "Deployment not possible!"
-          exit 1
       - name: Checkout
         uses: actions/checkout@v3
         with:
